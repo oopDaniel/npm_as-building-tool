@@ -1,0 +1,53 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "npm run compile && npm run lint",
+    "test": "mocha test -u bdd -R spec",
+    "start": "node index.js",
+    "start:dev": "node index.js 4000",
+    "lint": "jshint --exclude ./dist/script/lib/*.js *.js **/*.js",
+    "compile": "tsc --outDir ./dist/scripts/lib -m commonjs ./src/tsCode.ts",
+    "precompile": "npm run clean",
+    "clean": "rimraf lib/*",
+    "build:css": "node-sass --include-path styles styles/main.scss dist/styles/main.css",
+    "build:bundle": "browserify scripts/app.js | uglifyjs -mc > ./dist/scripts/bundle.js",
+    "build:clean": "rimraf dist/styles/* dist/scripts/*",
+    "prebuild": "npm run build:clean && mkdir -p dist/scripts/lib",
+    "build": "npm run build:css && npm run build:bundle",
+    "watch:css": "nodemon -e scss -x \"npm run build:css\"",
+    "watch:test": "npm t -- -w -R min",
+    "watch:lint": "watch 'npm run lint' .",
+    "watch:server": "nodemon --ignore dist --ignore public index.js",
+    "watch:ts": "nodemon --ignore dist --ignore public index.js",
+    "watch:bundle": "watchify ./scripts/app.js -o ./dist/scripts/bundle.js -dv",
+    "watch:browser": "live-reload --port 9091 dist/",
+    "watch": "npm run watch:test & npm run watch:bundle & npm run watch:server & npm run watch:browser"
+  },
+  "jshintConfig": {
+    "esnext": true,
+    "noyield": true
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "jshint": "^2.9.1",
+    "live-reload": "^1.1.0",
+    "mocha": "^2.4.5",
+    "node-sass": "^3.4.2",
+    "nodemon": "^1.9.1",
+    "rimraf": "^2.5.2",
+    "should": "^8.2.2",
+    "supertest": "^1.2.0",
+    "typescript": "^1.8.9",
+    "uglifyjs": "^2.4.10",
+    "watch": "^0.17.1",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "koa": "^1.2.0"
+  }
+}
