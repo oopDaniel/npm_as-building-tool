@@ -30,7 +30,10 @@
     "version:patch": "npm version patch",
     "push:origin": "git push --tags origin HEAD:master",
     "push:heroku": "git push heroku master",
-    "launch:prod": "heroku open"
+    "push": "npm run push:origin && npm run push:heroku",
+    "launch:prod": "heroku open",
+    "deploy:prod": "bash ./.deployProd.sh",
+    "test:deploy": "npm t -- -R dot"
   },
   "repository": {
     "type": "git",
