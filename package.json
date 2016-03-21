@@ -6,6 +6,8 @@
   "scripts": {
     "pretest": "npm run compile && npm run lint",
     "test": "mocha test -u bdd -R spec",
+    "test:options": "mocha",
+    "test:configoptions": "mocha test --reporter $npm_package_config_reporter",
     "start": "node index.js",
     "start:dev": "node index.js 4000",
     "lint": "jshint --exclude ./dist/script/lib/*.js *.js **/*.js",
@@ -28,12 +30,18 @@
     "version:major": "npm version major",
     "version:minor": "npm version minor",
     "version:patch": "npm version patch",
+    "prepush:origin": "echo 'Pushing to GitHub'",
     "push:origin": "git push --tags origin HEAD:master",
+    "prepush:heroku": "echo 'Pushing to Heroku'",
     "push:heroku": "git push heroku master",
     "push": "npm run push:origin && npm run push:heroku",
     "launch:prod": "heroku open",
     "deploy:prod": "bash ./.deployProd.sh",
+    "deploy:prod:time": "time(npm run deploy:prod)",
     "test:deploy": "npm t -- -R dot"
+  },
+  "config": {
+    "reporter": "landing"
   },
   "repository": {
     "type": "git",
